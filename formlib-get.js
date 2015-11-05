@@ -67,7 +67,8 @@ function RenderResponse(){
 	self.resContainer = "#result_div";
 	self.imgloader    = "#img_loader";
 	self.norescount   = "#total_results";
-	self.webWorkerlib = "/users/views/formlib-async.js";
+	self.webWorkerlib = "/formlib-async.js";
+	self.jstemplate = function(obj){ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');}; with(obj||{}){ __p+='<button class="btn btn-primary btn-block">Click me</button>';} return __p; };
 };
 
 RenderResponse.prototype = {
@@ -94,7 +95,7 @@ RenderResponse.prototype = {
 				method: self.method,
 				dataType: self.dataType,
 				success: function(data) {
-					self.ajaxResponse = data['data'];
+					self.ajaxResponse = data;
 					self.renderAsync();
 					/* console.log(data); */
 				},
@@ -102,11 +103,11 @@ RenderResponse.prototype = {
 					console.log(data);
 				},
 				beforeSend: function() {
-					console.log("Ajax Request Started -- ");
+					console.log("* - Ajax Request Started -- ");
 					$(self.imgloader).show();
 				},
 				complete: function() {
-					console.log("Ajax Request Ends -- ");
+					console.log("* - Ajax Request Ends -- ");
 					$(self.imgloader).hide();
 				}
 			};
@@ -126,14 +127,14 @@ RenderResponse.prototype = {
 		var _j = $(self.imgloader);
 		if ( _i && _i[0] && _j && _j[0] && self.ajaxResponse) {
 			/* _j.show(); */
-			console.log("* Now Render JS Template -- ");
+			console.log("* - Now Render JS Template -- ");
 			$.each(self.ajaxResponse, function(key, value){
 				_i.append(self.jstemplate(value));
 			});
-			console.log("* Done -- JS Template Rendering -- ");
+			console.log("* - Done -- JS Template Rendering -- ");
 			/* _j.hide(); */
 		} else {
-			console.log("* We need Container and Imageloader and Response Ajax.");
+			console.log("* - We need Container, Imageloader and Ajax Response .");
 		}
 		return true;
 	},
@@ -144,7 +145,7 @@ RenderResponse.prototype = {
 	renderAsync: function(){
 		var self = this;
 		var _i = $(self.resContainer);
-		console.log("* Lets Render JS Template in Async Manner");
+		console.log("* - Lets Render JS Template in Async Manner");
 		if (_i && _i[0] && self.ajaxResponse) {
 			if(typeof(Worker) !== "undefined") {
 				/* Browser Does Support Web worker Feature  */
@@ -169,7 +170,7 @@ RenderResponse.prototype = {
 							* relaod Event Listeners for Edit and Delete Buttons 
 							* - reloadEventsListners( );
 							*/
-							console.log("* Async - Rendering Complete");
+							console.log("* - Async - Rendering Complete");
 							return;
 						}
 						_i.append(event.data);
@@ -177,11 +178,12 @@ RenderResponse.prototype = {
 
 				}
 			} else {
-				console.log("* Your Browser does not support HTML5 WebWorker");
+				console.log("* - Your Browser does not support HTML5 WebWorker");
+				console.log("* - Render in Sync Manner");
 				self.renderSync();
 			}			
 		} else {
-			console.log("* We must have one Container to render response");
+			console.log("* - We must have one Container to render response");
 		}
 	}
 };

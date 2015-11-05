@@ -69,7 +69,7 @@ Example:
 function ProcessForm(formcsspath) {
     var self = this;
     this.formcsspath = formcsspath;
-    this.form   = $(this.formcsspath);     // Refernece to Form Field item 
+    this.form   = $(this.formcsspath);     /* Refernece to Form Field item */
     /*
     * If Value of Any Field Change
     * Mark This Form State as Changed 
@@ -185,7 +185,7 @@ ProcessForm.prototype = {
     * It's Time to Process Form Data 
     */
     process: function() {
-        // Save This Scope into self
+        /* Save This Scope into self */
         var self = this;
 
         self.dataFields = {};
@@ -523,7 +523,7 @@ upload_max_filesize = 100M; post_max_size = 100MB;
 #
 <div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"><span class="sr-only">0% </span></div></div>
 
-# Bootstrap_v3 Markup for Form Input Field
+# Sample Bootstrap_v3 Markup for Form Input Field
 <div class="form-group">
     <label for="name" class="control-label col-xs-1">Name</label>
     <div class="col-xs-4">
